@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OfficeBooker.Models.cs
 {
-    internal class Reservation
+    public class Reservation
     {
         [Key]
         int ReservationId {  get; set; }

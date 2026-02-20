@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Text;
+
+namespace OfficeBooker.DataAccess.Repository.IRepository
+{
+    public interface IRepository<T> where T : class
+    {
+        IEnumerable<T> GetAll();
+        T Get(T entity);
+        void Add(T entity);
+        void  Remove(T entity);
+    }
+}

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OfficeBooker.Models.cs
 {
-    internal class Worker
+    public class Worker
     {
         [Key]
         public string Id { get; set; }
@@ -13,6 +13,6 @@ namespace OfficeBooker.Models.cs
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }
-        List<Reservation> WorkerReservation { get; set; }
+        List<Reservation> WorkerReservations { get; set; }
     }
 }

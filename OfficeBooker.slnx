@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="OfficeBooker.cs/OfficeBooker.Models.cs.csproj" />
+  <Project Path="OfficeBooker.DataAccess/OfficeBooker.DataAccess.csproj" />
   <Project Path="OfficeBooker/OfficeBooker.csproj" />
 </Solution>
