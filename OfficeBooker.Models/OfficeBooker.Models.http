@@ -1,0 +1,6 @@
+@OfficeBooker.Models_HostAddress = http://localhost:5262
+
+GET {{OfficeBooker.Models_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
