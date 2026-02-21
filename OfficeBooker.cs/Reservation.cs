@@ -20,6 +20,6 @@ namespace OfficeBooker.Models.cs
         [Required]
         public int WorkerId{ get; set;}
         [Required]
-        public string WorkerName{ get; set;}
+        public string WorkerName{ get; set;} = default!;
     }
 }

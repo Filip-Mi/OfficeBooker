@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OfficeBooker.DataAccess.Data;
 using OfficeBooker.DataAccess.Repository.IRepository;
+using System.Linq.Expressions;
 
 
 namespace OfficeBooker.DataAccess.Repository
 {
-    internal class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _db;
         public DbSet<T> dbSet { get; set; }
@@ -20,10 +21,11 @@ namespace OfficeBooker.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(T entity)
+        public async Task<T?> Get(Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;
-            return query.FirstOrDefault(u=>u.Equals(entity));
+            query = query.Where(filter);
+            return await query.FirstOrDefaultAsync(); 
         }
 
         public IEnumerable<T> GetAll()
