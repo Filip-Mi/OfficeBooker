@@ -28,14 +28,14 @@ namespace OfficeBooker.DataAccess.Repository
             return await query.FirstOrDefaultAsync(); 
         }
 
-        public IEnumerable<T> GetAll()
+        public async  Task<IEnumerable<T>> GetAll()
         {
-            return dbSet.ToList();
+             return await dbSet.ToListAsync(); ;
         }
 
-        public void Remove(T entity)
+        public  void Remove(T entity)
         {
-            _db.Remove(entity);
+           _db.Remove(entity);
         }
     }
 }

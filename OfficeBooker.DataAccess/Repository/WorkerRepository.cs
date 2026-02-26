@@ -12,7 +12,7 @@ namespace OfficeBooker.DataAccess.Repository
         }
         public void Update(Worker worker)
         {
-            throw new NotImplementedException();
+            _db.Workers.Update(worker);
         }
     }
 }

@@ -1,4 +1,5 @@
-
+using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 namespace OfficeBooker
 {
     public class Program
@@ -12,8 +13,8 @@ namespace OfficeBooker
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-            //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            //builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            //builder.Services.AddDbContext<>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            //builder.Services.AddScoped<IUnitOf, UnitOfWork>();
 
             var app = builder.Build();
 
@@ -21,12 +22,13 @@ namespace OfficeBooker
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+           
 
             app.MapControllers();
 
