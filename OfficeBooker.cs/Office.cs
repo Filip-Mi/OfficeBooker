@@ -7,7 +7,7 @@ namespace OfficeBooker.Models;
        
 
         [Key]
-        public int OfficeId { get; set;}
+        public int Id { get; set;}
         [Required]
         public int OfficeNumber { get; set;}
         [Required]

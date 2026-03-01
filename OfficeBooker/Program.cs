@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using OfficeBooker.DataAccess.Data;
+using OfficeBooker.DataAccess.Repository;
+using OfficeBooker.DataAccess.Repository.I_Repository;
 using Scalar.AspNetCore;
 namespace OfficeBooker
 {
@@ -13,8 +16,8 @@ namespace OfficeBooker
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-            //builder.Services.AddDbContext<>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            //builder.Services.AddScoped<IUnitOf, UnitOfWork>();
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 

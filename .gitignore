@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Ignore local development settings
+appsettings.Development.json
+
+# Ignore local SQL Server database files
+*.mdf
+*.ldf
+
+# Ignore Visual Studio user-specific files
+.vs/
