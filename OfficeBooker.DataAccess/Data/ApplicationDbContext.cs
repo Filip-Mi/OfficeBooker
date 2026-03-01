@@ -9,24 +9,28 @@ namespace OfficeBooker.DataAccess.Data
         public DbSet<Office> Offices {  get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
             modelBuilder.Entity<Office>().HasData(
-                 // Floor 0
-                new Office { OfficeNumber = 1, Capacity = 10, FloorNumber = 0 },
-                new Office { OfficeNumber = 2, Capacity = 8, FloorNumber = 0 },
-                new Office { OfficeNumber = 3, Capacity = 12, FloorNumber = 0 },
+                // Floor 0
+                new Office { Id = 1, OfficeNumber = 101, Capacity = 10, FloorNumber = 0 },
+                new Office { Id = 2, OfficeNumber = 102, Capacity = 8, FloorNumber = 0 },
+                new Office { Id = 3, OfficeNumber = 103, Capacity = 12, FloorNumber = 0 },
 
                 // Floor 1
-                new Office { OfficeNumber = 4, Capacity = 10, FloorNumber = 1 },
-                new Office { OfficeNumber = 5, Capacity = 15, FloorNumber = 1 },
-                new Office { OfficeNumber = 6, Capacity = 10, FloorNumber = 1 },
-                new Office { OfficeNumber = 7, Capacity = 5, FloorNumber = 1 },
+                new Office { Id = 4, OfficeNumber = 201, Capacity = 10, FloorNumber = 1 },
+                new Office { Id = 5, OfficeNumber = 202, Capacity = 15, FloorNumber = 1 },
+                new Office { Id = 6, OfficeNumber = 203, Capacity = 10, FloorNumber = 1 },
+                new Office { Id = 7, OfficeNumber = 204, Capacity = 5, FloorNumber = 1 },
 
                 // Floor 2
-                new Office { OfficeNumber = 8, Capacity = 20, FloorNumber = 2 },
-                new Office { OfficeNumber = 9, Capacity = 10, FloorNumber = 2 },
-                new Office { OfficeNumber = 10, Capacity = 8, FloorNumber = 2 }
+                new Office { Id = 8, OfficeNumber = 301, Capacity = 20, FloorNumber = 2 },
+                new Office { Id = 9, OfficeNumber = 302, Capacity = 10, FloorNumber = 2 },
+                new Office { Id = 10, OfficeNumber = 303, Capacity = 8, FloorNumber = 2 }
             );
             modelBuilder.Entity<Worker>().HasData(
                 new Worker { Id = 1, Name = "Piotr", Surname = "Nowak" },

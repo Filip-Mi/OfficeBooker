@@ -18,7 +18,7 @@ namespace OfficeBooker.DataAccess.Repository
             bool IsStartTimeOk = true;
             bool IsEndTimeOk = true;
             IQueryable<Reservation> beginingTime = dbSet;
-                beginingTime = (IQueryable<Reservation>)beginingTime.Where(res => res.OfficeNumber == reservation.OfficeNumber)
+                beginingTime = (IQueryable<Reservation>)beginingTime.Where(res => res.OfficeId == reservation.OfficeId)
                 .Where(res => res.ReservationStartTime.Date == reservation.ReservationStartTime.Date)
                 .Where(res => res.ReservationStartTime <= reservation.ReservationStartTime && res.ReservationStartTime >= reservation.ReservationEndTime).ToList();
 
