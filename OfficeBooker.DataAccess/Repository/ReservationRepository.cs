@@ -4,7 +4,7 @@ using OfficeBooker.Models.cs;
 
 namespace OfficeBooker.DataAccess.Repository
 {
-    internal class ReservationRepository : Repository<Reservation>, IReservationRepository
+    public class ReservationRepository : Repository<Reservation>, IReservationRepository
     {
         ApplicationDbContext _db;
         

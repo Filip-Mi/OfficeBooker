@@ -3,7 +3,7 @@ using OfficeBooker.Models.cs;
 
 namespace OfficeBooker.DataAccess.Repository.I_Repository
 {
-    internal interface IReservationRepository : IRepository<Models.cs.Reservation>
+    public interface IReservationRepository : IRepository<Models.cs.Reservation>
     {
         bool IsReservationAvailable(Reservation reservation);
     }
