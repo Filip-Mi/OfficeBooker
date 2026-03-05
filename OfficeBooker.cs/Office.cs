@@ -4,8 +4,6 @@ namespace OfficeBooker.Models;
 
     public class Office
     {
-       
-
         [Key]
         public int Id { get; set;}
         [Required]
@@ -14,8 +12,5 @@ namespace OfficeBooker.Models;
         public int  Capacity{ get; set;}
         [Required]
         public int FloorNumber {  get; set;}
-        public List<string> Equipment {  get; set;} = new List<string>();
-
+        public string Equipment { get; set; } = default!;
 }
-
-    
