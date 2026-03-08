@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace OfficeBooker.Models.cs
 {
-    public class Worker
+    public class Worker : IdentityUser
     {
-        [Key]
-        public int Id { get; set; } = default!;
         [Required]
         public string Name { get; set; } = default!;
         [Required]
