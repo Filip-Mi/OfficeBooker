@@ -14,6 +14,6 @@ namespace OfficeBooker.Models.cs.DTOs
         [MinLength(6)]
         public string Password { get; set; } = default!;
         [Required]
-        public string? Role { get; set; } = "User";
+        public string Role { get; set; } = "User";
     }
 }
