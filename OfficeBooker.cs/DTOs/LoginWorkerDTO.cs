@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OfficeBooker.Models.cs.DTOs
 {
-    public  class LoginworkerDTO
+    public  class LoginWorkerDTO
     {
         [Required]
         public string Email { get; set; } = default!;
