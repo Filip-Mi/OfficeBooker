@@ -15,10 +15,9 @@ namespace OfficeBooker.DataAccess.Repository
             officeRepository = new OfficeRepository(_db);
             reservationRepository = new ReservationRepository(_db);
         }
-        public void Save()
+        public Task Save()
         {
-            _db.SaveChanges();
-
+            return  _db.SaveChangesAsync();
         }
     }
 }
