@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OfficeBooker.DataAccess\OfficeBooker.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
