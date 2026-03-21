@@ -28,9 +28,21 @@ namespace OfficeBooker.DataAccess.Repository
             return await query.FirstOrDefaultAsync(); 
         }
 
-        public async  Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
-             return await dbSet.ToListAsync(); ;
+            IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return await query.ToListAsync();
         }
 
         public  void Remove(T entity)
