@@ -6,6 +6,8 @@ using OfficeBooker.DataAccess.Data;
 using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models.cs;
+using OfficeBooker.Services;
+using OfficeBooker.Services.IServices;
 using Scalar.AspNetCore;
 using System.Text;
 namespace OfficeBooker
@@ -25,6 +27,7 @@ namespace OfficeBooker
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddIdentity<Worker, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            builder.Services.AddScoped<IReservationService, ReservationService>();
             //Jwt Config
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var secretKey = jwtSettings["Key"];
