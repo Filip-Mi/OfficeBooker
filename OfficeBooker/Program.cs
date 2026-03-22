@@ -28,6 +28,7 @@ namespace OfficeBooker
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddIdentity<Worker, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             builder.Services.AddScoped<IReservationService, ReservationService>();
+            builder.Services.AddScoped<IOfficeService, OfficeService>();
             //Jwt Config
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var secretKey = jwtSettings["Key"];
