@@ -10,7 +10,7 @@ namespace OfficeBooker.Models.cs
         [Key]
         public int Id {  get; set; }
         [Required]
-        public string OfficeId { get; set; } = string.Empty;
+        public int OfficeId { get; set; }
         [ForeignKey("OfficeId")]
         public Office? Office { get; set; }
         [Required]
