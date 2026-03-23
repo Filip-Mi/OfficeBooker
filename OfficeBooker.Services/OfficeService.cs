@@ -10,7 +10,7 @@ namespace OfficeBooker.Services
     public class OfficeService : IOfficeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public OfficeService(UnitOfWork unitOfWork)
+        public OfficeService(IUnitOfWork unitOfWork)
         {
          _unitOfWork = unitOfWork;
         }
