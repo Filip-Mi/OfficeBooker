@@ -18,6 +18,7 @@ namespace OfficeBooker.Controllers
             _reservationService = reservationService;
         }
         [HttpPost]
+        [Route("create")]
         public async Task<IActionResult> CreateReservation([FromBody] ReservationCreateDTO dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

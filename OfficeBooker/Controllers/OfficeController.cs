@@ -17,6 +17,7 @@ namespace OfficeBooker.Controllers
             _unitOfWork = unitOfWork;
         }
         [HttpGet]
+        [Route("list")]
         public async Task<ActionResult<IEnumerable<OfficeDTO>>> GetOffices()
         {
             var offices = await _unitOfWork.officeRepository.GetAll();
@@ -26,6 +27,7 @@ namespace OfficeBooker.Controllers
         }
         [HttpPost]
         [Authorize(Roles ="Admin")]
+        [Route("create")]
         public async Task<IActionResult> CreateOffice([FromBody]OfficeDTO officeDTO)
         {
             var office = new Office
