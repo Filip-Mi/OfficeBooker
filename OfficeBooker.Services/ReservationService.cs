@@ -12,14 +12,14 @@ namespace OfficeBooker.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<IEnumerable<ReservationCreateDTO>> GetMyReservationsAsync(string userId)
+        public async Task<IEnumerable<ReservationRespondDTO>> GetMyReservationsAsync(string userId)
         {
             var reservations = await _unitOfWork.reservationRepository.GetAll(
                 filter: r => r.WorkerId == userId,
                 includeProperties: "Office"
             );
 
-            return (IEnumerable<ReservationCreateDTO>)reservations.Select(r => new ReservationRespondDTO
+            return reservations.Select(r => new ReservationRespondDTO
             {
                 Id = r.Id,
                 WorkerId = r.WorkerId,
@@ -27,7 +27,7 @@ namespace OfficeBooker.Services
                 ReservationEndTime = r.ReservationEndTime,
                 ReservationCreateTime = r.ReservationCreateTime,
                 OfficeId = r.OfficeId,
-                OfficeNumber = r.Office.OfficeNumber,
+                OfficeNumber = r.Office!.OfficeNumber,
                 FloorNumber = r.Office.FloorNumber    
             });
         }
