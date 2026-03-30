@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace OfficeBooker.Models.cs
+namespace OfficeBooker.Models
 {
     public class Worker : IdentityUser
     {

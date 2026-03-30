@@ -1,4 +1,4 @@
-﻿using OfficeBooker.Models.cs.DTOs;
+﻿using OfficeBooker.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;

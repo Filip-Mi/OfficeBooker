@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using OfficeBooker.DataAccess.Data;
 using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
-using OfficeBooker.Models.cs;
+using OfficeBooker.Models;
 using OfficeBooker.Services;
 using OfficeBooker.Services.IServices;
 using Scalar.AspNetCore;

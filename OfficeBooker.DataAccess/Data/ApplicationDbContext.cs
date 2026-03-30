@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OfficeBooker.Models;
-using OfficeBooker.Models.cs;
+using OfficeBooker.Models;
 
 namespace OfficeBooker.DataAccess.Data
 {

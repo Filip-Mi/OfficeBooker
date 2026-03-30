@@ -1,6 +1,6 @@
 ﻿using OfficeBooker.DataAccess.Repository.I_Repository;
-using OfficeBooker.Models.cs;
-using OfficeBooker.Models.cs.DTOs;
+using OfficeBooker.Models;
+using OfficeBooker.Models.DTOs;
 using OfficeBooker.Services.IServices;
 
 namespace OfficeBooker.Services

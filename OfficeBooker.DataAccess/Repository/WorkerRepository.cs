@@ -1,6 +1,6 @@
 ﻿using OfficeBooker.DataAccess.Data;
 using OfficeBooker.DataAccess.Repository.I_Repository;
-using OfficeBooker.Models.cs;
+using OfficeBooker.Models;
 
 namespace OfficeBooker.DataAccess.Repository
 {

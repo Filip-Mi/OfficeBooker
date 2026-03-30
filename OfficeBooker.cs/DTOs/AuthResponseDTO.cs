@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OfficeBooker.Models.cs.DTOs
+namespace OfficeBooker.Models.DTOs
 {
     public class AuthResponseDTO
     {

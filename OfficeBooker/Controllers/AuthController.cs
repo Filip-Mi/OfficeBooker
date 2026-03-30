@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OfficeBooker.Models.cs.DTOs;
+using OfficeBooker.Models.DTOs;
 using OfficeBooker.Services.IServices;
 using System.Security.Claims;
 

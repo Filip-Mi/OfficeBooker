@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OfficeBooker.Models.cs.DTOs
+namespace OfficeBooker.Models.DTOs
 {
     public class ReservationCreateDTO
     {

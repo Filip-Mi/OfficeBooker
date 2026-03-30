@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OfficeBooker.Models.cs.DTOs;
+using OfficeBooker.Models.DTOs;
 
 namespace OfficeBooker.Services.IServices
 {

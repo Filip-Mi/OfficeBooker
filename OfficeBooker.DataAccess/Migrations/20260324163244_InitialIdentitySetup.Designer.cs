@@ -184,7 +184,7 @@ namespace OfficeBooker.DataAccess.Migrations
                     b.ToTable("Offices");
                 });
 
-            modelBuilder.Entity("OfficeBooker.Models.cs.Reservation", b =>
+            modelBuilder.Entity("OfficeBooker.Models.Reservation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -221,7 +221,7 @@ namespace OfficeBooker.DataAccess.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("OfficeBooker.Models.cs.Worker", b =>
+            modelBuilder.Entity("OfficeBooker.Models.Worker", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -305,7 +305,7 @@ namespace OfficeBooker.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("OfficeBooker.Models.cs.Worker", null)
+                    b.HasOne("OfficeBooker.Models.Worker", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,7 +314,7 @@ namespace OfficeBooker.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("OfficeBooker.Models.cs.Worker", null)
+                    b.HasOne("OfficeBooker.Models.Worker", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,7 +329,7 @@ namespace OfficeBooker.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OfficeBooker.Models.cs.Worker", null)
+                    b.HasOne("OfficeBooker.Models.Worker", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -338,14 +338,14 @@ namespace OfficeBooker.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("OfficeBooker.Models.cs.Worker", null)
+                    b.HasOne("OfficeBooker.Models.Worker", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OfficeBooker.Models.cs.Reservation", b =>
+            modelBuilder.Entity("OfficeBooker.Models.Reservation", b =>
                 {
                     b.HasOne("OfficeBooker.Models.Office", "Office")
                         .WithMany()
@@ -353,7 +353,7 @@ namespace OfficeBooker.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OfficeBooker.Models.cs.Worker", "Worker")
+                    b.HasOne("OfficeBooker.Models.Worker", "Worker")
                         .WithMany()
                         .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
