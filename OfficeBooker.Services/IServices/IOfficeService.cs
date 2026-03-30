@@ -7,7 +7,7 @@ namespace OfficeBooker.Services.IServices
 {
     public interface IOfficeService
     {
-        Task<IEnumerable<OfficeDTO>> GetAllOfficesAsync();
-        Task<OfficeDTO> CreateOfficeAsync(OfficeDTO officeDto);
+        public Task<IEnumerable<OfficeDTO>> GetAllOfficesAsync();
+        public Task<OfficeDTO> CreateOfficeAsync(OfficeDTO officeDto);
     }
 }
