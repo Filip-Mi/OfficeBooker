@@ -22,7 +22,7 @@ namespace OfficeBooker.Controllers
         {
             var offices = await _unitOfWork.officeRepository.GetAll();
 
-            var officesDTO = offices.Select(o => new OfficeDTO { Id = o.Id, OfficeNumber = o.OfficeNumber, Capacity = o.Capacity , FloorNumber = o.FloorNumber , Equipment = o.Equipment}).ToList;
+            var officesDTO = offices.Select(o => new OfficeDTO { Id = o.Id, OfficeNumber = o.OfficeNumber, Capacity = o.Capacity , FloorNumber = o.FloorNumber , Equipment = o.Equipment}).ToList();
             return Ok(officesDTO);
         }
         [HttpPost]
@@ -38,7 +38,7 @@ namespace OfficeBooker.Controllers
                 Equipment = officeDTO.Equipment
             };
             _unitOfWork.officeRepository.Add(office);
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
             return Ok(office);
 
         }
