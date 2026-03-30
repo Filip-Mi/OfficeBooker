@@ -67,7 +67,7 @@ namespace OfficeBooker.Services.IServices
         public async Task<(bool Success, string Message)> RegisterAsync(CreateWorkerDTO model)
         {
             var userExist = await _userManager.FindByEmailAsync(model.Email);
-            if (userExist != null) return (false, "Użytkownik już istnieje.");
+            if (userExist != null) return (false, "User already exist");
 
             var worker = new Worker { UserName = model.Email, Name = model.Name, Surname = model.Surname, Email = model.Email };
             var result = await _userManager.CreateAsync(worker, model.Password);
@@ -79,7 +79,7 @@ namespace OfficeBooker.Services.IServices
                     await _roleManager.CreateAsync(new IdentityRole(model.Role));
                 }
                 await _userManager.AddToRoleAsync(worker, model.Role);
-                return (true, "Registration Successfu");
+                return (true, "Registration Successful");
             }
             return (false, string.Join(", ", result.Errors.Select(e => e.Description)));
         }
