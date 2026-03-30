@@ -361,8 +361,21 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-# Ignore local development settings
+
+# Configuration files with sensitive data
+appsettings.json
 appsettings.Development.json
+appsettings.Production.json
+appsettings.*.json
+!appsettings.example.json
+!appsettings.template.json
+
+# User secrets and environment files
+user-secrets.json
+secrets.json
+.env
+.env.local
+.env.*.local
 
 # Ignore local SQL Server database files
 *.mdf
