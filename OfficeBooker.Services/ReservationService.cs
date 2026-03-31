@@ -1,4 +1,5 @@
-﻿using OfficeBooker.DataAccess.Repository.I_Repository;
+﻿using Microsoft.AspNetCore.Identity;
+using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
 using OfficeBooker.Models.DTOs;
 using OfficeBooker.Services.IServices;
@@ -8,9 +9,12 @@ namespace OfficeBooker.Services
     public class ReservationService : IReservationService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ReservationService(IUnitOfWork unitOfWork)
+        private readonly UserManager<Worker> _userManager;
+        public ReservationService(IUnitOfWork unitOfWork , UserManager<Worker> userManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
+
         }
         public async Task<IEnumerable<ReservationRespondDTO>> GetMyReservationsAsync(string userId)
         {
@@ -51,10 +55,18 @@ namespace OfficeBooker.Services
                 throw new Exception();
             }
 
+            var worker = await _userManager.FindByIdAsync(userId);
+            if(worker == null)
+            {
+                throw new Exception();
+            }
+            
+
             var reservation = new Reservation
             {
                 OfficeId = dto.OfficeId,
                 WorkerId = userId,
+                WorkerName = $"{worker.Name} {worker.Surname}",
                 ReservationStartTime = dto.ReservationStartTime,
                 ReservationEndTime = dto.ReservationEndTime,
                 ReservationCreateTime = DateTime.Now

@@ -32,7 +32,8 @@ namespace OfficeBooker.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var realMessage = ex.InnerException?.Message ?? ex.Message;
+                return BadRequest(new { error = realMessage });
             }
         }
         [HttpGet("my")]
