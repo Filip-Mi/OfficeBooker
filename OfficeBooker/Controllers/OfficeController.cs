@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
 using OfficeBooker.Models.DTOs;
+using OfficeBooker.Services.IServices;
 
 namespace OfficeBooker.Controllers
 {
@@ -11,18 +13,19 @@ namespace OfficeBooker.Controllers
     [Authorize]
     public class OfficeController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public OfficeController(IUnitOfWork unitOfWork)
+        private readonly IOfficeService _officeService;
+
+        public OfficeController(IOfficeService officeService)
         {
-            _unitOfWork = unitOfWork;
+            _officeService = officeService;
         }
         [HttpGet]
         [Route("list")]
         public async Task<ActionResult<IEnumerable<OfficeDTO>>> GetOffices()
         {
-            var offices = await _unitOfWork.officeRepository.GetAll();
+            var offices = await _officeService.GetAllOfficesAsync();
 
-            var officesDTO = offices.Select(o => new OfficeDTO { Id = o.Id, OfficeNumber = o.OfficeNumber, Capacity = o.Capacity , FloorNumber = o.FloorNumber , Equipment = o.Equipment}).ToList();
+            var officesDTO = offices.Adapt<OfficeDTO>();
             return Ok(officesDTO);
         }
         [HttpPost]
@@ -30,15 +33,9 @@ namespace OfficeBooker.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateOffice([FromBody]OfficeCreateDTO officeDTO)
         {
-            var office = new Office
-            {
-                FloorNumber = officeDTO.FloorNumber,
-                Capacity = officeDTO.Capacity,
-                OfficeNumber = officeDTO.OfficeNumber,
-                Equipment = officeDTO.Equipment
-            };
-            _unitOfWork.officeRepository.Add(office);
-            await _unitOfWork.Save();
+            var office = officeDTO.Adapt<OfficeCreateDTO>();
+            await _officeService.CreateOfficeAsync(office);
+            
             return Ok(office);
 
         }
