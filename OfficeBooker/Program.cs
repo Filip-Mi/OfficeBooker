@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using OfficeBooker.DataAccess.Data;
 using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
+using OfficeBooker.Middleware;
 using OfficeBooker.Models;
 using OfficeBooker.Services;
 using OfficeBooker.Services.IServices;
@@ -82,6 +83,9 @@ namespace OfficeBooker
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddControllers();
 
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
+
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var secretKey = jwtSettings["Key"];
 
@@ -104,6 +108,7 @@ namespace OfficeBooker
             });
 
             var app = builder.Build();
+            app.UseExceptionHandler();
 
             if (app.Environment.IsDevelopment())
             {

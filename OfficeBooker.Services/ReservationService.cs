@@ -2,6 +2,7 @@
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
 using OfficeBooker.Models.DTOs;
+using OfficeBooker.Models.Exceptions;
 using OfficeBooker.Services.IServices;
 
 namespace OfficeBooker.Services
@@ -10,12 +11,13 @@ namespace OfficeBooker.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<Worker> _userManager;
-        public ReservationService(IUnitOfWork unitOfWork , UserManager<Worker> userManager)
+        
+        public ReservationService(IUnitOfWork unitOfWork, UserManager<Worker> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
-
         }
+
         public async Task<IEnumerable<ReservationRespondDTO>> GetMyReservationsAsync(string userId)
         {
             var reservations = await _unitOfWork.reservationRepository.GetAll(
@@ -41,7 +43,7 @@ namespace OfficeBooker.Services
             var office = await _unitOfWork.officeRepository.Get(o => o.Id == dto.OfficeId);
             if (office == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException("Office not found.");
             }
 
             var overlappingReservation = await _unitOfWork.reservationRepository.Get(r =>
@@ -52,15 +54,14 @@ namespace OfficeBooker.Services
 
             if (overlappingReservation != null)
             {
-                throw new Exception();
+                throw new ReservationException("The office is already reserved for the requested time period.");
             }
 
             var worker = await _userManager.FindByIdAsync(userId);
-            if(worker == null)
+            if (worker == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException("Worker not found.");
             }
-            
 
             var reservation = new Reservation
             {
