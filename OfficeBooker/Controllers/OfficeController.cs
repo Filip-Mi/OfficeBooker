@@ -28,7 +28,7 @@ namespace OfficeBooker.Controllers
         [HttpPost]
         [Authorize(Roles ="Admin")]
         [Route("create")]
-        public async Task<IActionResult> CreateOffice([FromBody]OfficeDTO officeDTO)
+        public async Task<IActionResult> CreateOffice([FromBody]OfficeCreateDTO officeDTO)
         {
             var office = new Office
             {
