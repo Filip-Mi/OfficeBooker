@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
 using OfficeBooker.Models.DTOs;
@@ -11,11 +12,13 @@ namespace OfficeBooker.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<Worker> _userManager;
+        private readonly IValidator<ReservationCreateDTO> _validator;
         
-        public ReservationService(IUnitOfWork unitOfWork, UserManager<Worker> userManager)
+        public ReservationService(IUnitOfWork unitOfWork, UserManager<Worker> userManager , IValidator<ReservationCreateDTO> validator)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _validator = validator;
         }
 
         public async Task<IEnumerable<ReservationRespondDTO>> GetMyReservationsAsync(string userId)
@@ -41,6 +44,13 @@ namespace OfficeBooker.Services
         public async Task<ReservationRespondDTO> CreateReservationAsync(ReservationCreateDTO dto, string userId)
         {
             var office = await _unitOfWork.officeRepository.Get(o => o.Id == dto.OfficeId);
+            var validationResult = await _validator.ValidateAsync(dto);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
             if (office == null)
             {
                 throw new KeyNotFoundException("Office not found.");

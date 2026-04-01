@@ -22,7 +22,30 @@ namespace OfficeBooker.Middleware
         {
             // Retrieve or generate a unique trace ID for error tracking
             var traceId = Activity.Current?.TraceId.ToString() ?? Guid.NewGuid().ToString();
-            
+
+            // Special handling for FluentValidation exceptions to return detailed validation errors
+            if (exception is  FluentValidation.ValidationException validation)
+            {
+                var valResponse = new ErrorResponse
+                {
+                    Message = "Validation failed for the request.",
+                    ErrorCode = "VALIDATION_ERROR",
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    Path = httpContext.Request.Path,
+                    Timestamp = DateTime.UtcNow,
+                    TraceId = traceId,
+                    Details = validation.Message,
+                    ValidationErrors = validation.Errors
+                        .GroupBy(e => e.PropertyName)
+                        .ToDictionary(
+                            g => g.Key,
+                            g => g.Select(e => e.ErrorMessage).ToList()
+                        )
+                };
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await httpContext.Response.WriteAsJsonAsync(valResponse, cancellationToken);
+                return true;
+            }
             // Log the exception details for diagnostics
             _logger.LogError(exception, "An unhandled exception occurred. TraceId: {TraceId}", traceId);
 
@@ -78,14 +101,11 @@ namespace OfficeBooker.Middleware
         {
             return exception switch
             {
-                // 1. Najpierw sprawdzamy nasze własne wyjątki (muszą być NAD domyślnym '_')
                 BaseDomainException domainEx => (
                     domainEx.StatusCode,
                     domainEx.GetType().Name.Replace("Exception", "").ToUpper(),
     domainEx.Message
                 ),
-
-                // 2. Standardowe wyjątki .NET
                 KeyNotFoundException => (
                     StatusCodes.Status404NotFound,
                     "NOT_FOUND",

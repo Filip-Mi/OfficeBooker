@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Middleware;
 using OfficeBooker.Models;
+using OfficeBooker.Models.Validators;
 using OfficeBooker.Services;
 using OfficeBooker.Services.IServices;
 using Scalar.AspNetCore;
@@ -85,6 +87,8 @@ namespace OfficeBooker
 
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<ReservationCreateValidator>();
 
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var secretKey = jwtSettings["Key"];
