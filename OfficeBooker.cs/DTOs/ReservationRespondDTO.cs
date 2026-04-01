@@ -20,8 +20,8 @@ namespace OfficeBooker.Models.DTOs
         [Required]
         public int OfficeId { get; init; }
         [Required]
-        public int  OfficeNumber { get; init; } 
+        public int  OfficeNumber { get; set; } 
         [Required]
-        public int FloorNumber { get; init; }
+        public int FloorNumber { get; set; }
     }
 }

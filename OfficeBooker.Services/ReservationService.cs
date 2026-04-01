@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
@@ -26,19 +27,22 @@ namespace OfficeBooker.Services
             var reservations = await _unitOfWork.reservationRepository.GetAll(
                 filter: r => r.WorkerId == userId,
                 includeProperties: "Office"
+
             );
 
-            return reservations.Select(r => new ReservationRespondDTO
+           
+
+            return reservations.Select(r =>
             {
-                Id = r.Id,
-                WorkerId = r.WorkerId,
-                ReservationStartTime = r.ReservationStartTime,
-                ReservationEndTime = r.ReservationEndTime,
-                ReservationCreateTime = r.ReservationCreateTime,
-                OfficeId = r.OfficeId,
-                OfficeNumber = r.Office!.OfficeNumber,
-                FloorNumber = r.Office.FloorNumber    
-            });
+                var response = r.Adapt<ReservationRespondDTO>();
+                if(r.Office != null)
+                {
+                    response.OfficeNumber = r.Office.OfficeNumber;
+                    response.FloorNumber = r.Office.FloorNumber;
+                }
+                return response;
+            }
+            );
         }
 
         public async Task<ReservationRespondDTO> CreateReservationAsync(ReservationCreateDTO dto, string userId)
@@ -76,30 +80,18 @@ namespace OfficeBooker.Services
                 throw new KeyNotFoundException("Worker not found.");
             }
 
-            var reservation = new Reservation
-            {
-                OfficeId = dto.OfficeId,
-                WorkerId = userId,
-                WorkerName = $"{worker.Name} {worker.Surname}",
-                ReservationStartTime = dto.ReservationStartTime,
-                ReservationEndTime = dto.ReservationEndTime,
-                ReservationCreateTime = DateTime.Now
-            };
+            var reservation = dto.Adapt<Reservation>();
+            reservation.WorkerId = userId;
+            reservation.WorkerName = $"{worker.Name} {worker.Surname}";
+            reservation.ReservationCreateTime = DateTime.Now;
 
             _unitOfWork.reservationRepository.Add(reservation);
             await _unitOfWork.Save();
 
-            return new ReservationRespondDTO
-            {
-                Id = reservation.Id,
-                WorkerId = reservation.WorkerId,
-                ReservationStartTime = reservation.ReservationStartTime,
-                ReservationEndTime = reservation.ReservationEndTime,
-                ReservationCreateTime = reservation.ReservationCreateTime,
-                OfficeId = office.Id,
-                OfficeNumber = office.OfficeNumber,
-                FloorNumber = office.FloorNumber
-            };
+            var response = reservation.Adapt<ReservationRespondDTO>();
+            response.OfficeNumber = office.OfficeNumber;
+            response.FloorNumber = office.FloorNumber;
+            return response;
         }
     }
 }

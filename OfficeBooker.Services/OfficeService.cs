@@ -1,4 +1,5 @@
-﻿using OfficeBooker.DataAccess.Repository;
+﻿using Mapster;
+using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
 using OfficeBooker.Models.DTOs;
@@ -16,25 +17,19 @@ namespace OfficeBooker.Services
         }
         public async Task<OfficeDTO> CreateOfficeAsync(OfficeDTO officeDTO)
         {
-            var office = new Office
-            {
-                FloorNumber = officeDTO.FloorNumber,
-                Capacity = officeDTO.Capacity,
-                OfficeNumber = officeDTO.OfficeNumber,
-                Equipment = officeDTO.Equipment
-            };
+            var office = officeDTO.Adapt<Office>();
+
             _unitOfWork.officeRepository.Add(office);
             await _unitOfWork.Save();
-            officeDTO.Id = office.Id;
-            return officeDTO;
+            return office.Adapt<OfficeDTO>();
         }
 
         public async Task<IEnumerable<OfficeDTO>> GetAllOfficesAsync()
         {
             var offices = await _unitOfWork.officeRepository.GetAll();
 
-            return offices.Select(o => new OfficeDTO { Id = o.Id, OfficeNumber = o.OfficeNumber, Capacity = o.Capacity, FloorNumber = o.FloorNumber, Equipment = o.Equipment }).ToList();
-             
+            return offices.Adapt<IEnumerable<OfficeDTO>>();
+
         }
     }
 }
