@@ -13,7 +13,7 @@ namespace OfficeBooker.Services
         private readonly IUnitOfWork _unitOfWork;
         public OfficeService(IUnitOfWork unitOfWork)
         {
-         _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
         public async Task<OfficeDTO> CreateOfficeAsync(OfficeDTO officeDTO)
         {
@@ -30,6 +30,14 @@ namespace OfficeBooker.Services
 
             return offices.Adapt<IEnumerable<OfficeDTO>>();
 
+        }
+        public async Task<OfficeDTO> GetOfficeByIdAsync(int id)
+        {
+            var office = await _unitOfWork.officeRepository.Get(o => o.Id == id);
+            if (office == null) {
+                throw new KeyNotFoundException($"Office with ID {id} not found.");
+            }
+            return office.Adapt<OfficeDTO>();
         }
     }
 }
