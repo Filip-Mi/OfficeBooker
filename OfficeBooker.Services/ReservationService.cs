@@ -54,7 +54,10 @@ namespace OfficeBooker.Services
 
             if (overlappingReservation != null)
             {
-                throw new ReservationException("The office is already reserved for the requested time period.");
+                throw new OfficeAlreadyReservedException(dto.OfficeId);
+            }
+            if (dto.ReservationStartTime >= dto.ReservationEndTime) {
+                throw new InvalidReservationPeriodException(dto.ReservationStartTime, dto.ReservationEndTime);
             }
 
             var worker = await _userManager.FindByIdAsync(userId);

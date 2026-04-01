@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using System.Diagnostics;
 using OfficeBooker.Models.Exceptions;
+using OfficeBooker.Models.Exceptions.Base;
+using System.Diagnostics;
 namespace OfficeBooker.Middleware
 {
     /// <summary>
@@ -73,36 +74,37 @@ namespace OfficeBooker.Middleware
         /// </item>
         /// </list>
         /// </remarks>
-        private static (int StatusCode, string ErrorCode, string Message) MapExceptionToResponse(Exception exception)
+            private static (int StatusCode, string ErrorCode, string Message) MapExceptionToResponse(Exception exception)
         {
             return exception switch
             {
+                // 1. Najpierw sprawdzamy nasze własne wyjątki (muszą być NAD domyślnym '_')
+                BaseDomainException domainEx => (
+                    domainEx.StatusCode,
+                    domainEx.GetType().Name.Replace("Exception", "").ToUpper(),
+    domainEx.Message
+                ),
+
+                // 2. Standardowe wyjątki .NET
                 KeyNotFoundException => (
                     StatusCodes.Status404NotFound,
                     "NOT_FOUND",
                     "The requested resource was not found."
                 ),
+
                 UnauthorizedAccessException => (
                     StatusCodes.Status401Unauthorized,
                     "UNAUTHORIZED",
                     "You are not authorized to access this resource."
                 ),
-                ArgumentException => (
-                    StatusCodes.Status400BadRequest,
-                    "BAD_REQUEST",
-                    "Invalid argument provided."
-                ),
-                InvalidOperationException => (
-                    StatusCodes.Status409Conflict,
-                    "INVALID_OPERATION",
-                    exception.Message
-                ),
+
                 _ => (
                     StatusCodes.Status500InternalServerError,
                     "INTERNAL_SERVER_ERROR",
                     "An unexpected error occurred. Please try again later."
                 )
             };
-        }
+        } 
     }
 }
+
