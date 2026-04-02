@@ -15,7 +15,7 @@ namespace OfficeBooker.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<OfficeDTO> CreateOfficeAsync(OfficeDTO officeDTO)
+        public async Task<OfficeDTO> CreateOfficeAsync(OfficeCreateDTO officeDTO)
         {
             var office = officeDTO.Adapt<Office>();
 
@@ -34,10 +34,21 @@ namespace OfficeBooker.Services
         public async Task<OfficeDTO> GetOfficeByIdAsync(int id)
         {
             var office = await _unitOfWork.officeRepository.Get(o => o.Id == id);
-            if (office == null) {
+            if (office == null)
+            {
                 throw new KeyNotFoundException($"Office with ID {id} not found.");
             }
             return office.Adapt<OfficeDTO>();
+        }
+        public async Task DeleteOfficeAsync(int id)
+        {
+            var office = await _unitOfWork.officeRepository.Get(o => o.Id == id);
+            if (office == null)
+            {
+                throw new KeyNotFoundException($"Office with ID {id} not found.");
+            }
+            _unitOfWork.officeRepository.Remove(office);
+            await  _unitOfWork.Save();
         }
     }
 }
