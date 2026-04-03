@@ -42,5 +42,13 @@ namespace OfficeBooker.Controllers
             var reservations = await _reservationService.GetMyReservationsAsync(userId);
             return Ok(reservations);
         }
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteReservation(int id)
+        {
+            var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+            await _reservationService.DeleteReservationAsync(id, userId);
+            return NoContent();
+        }
     }
 }

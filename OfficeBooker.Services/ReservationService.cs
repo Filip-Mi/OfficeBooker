@@ -93,5 +93,22 @@ namespace OfficeBooker.Services
             response.FloorNumber = office.FloorNumber;
             return response;
         }
+
+        public async Task DeleteReservationAsync(int id, string currentUserId)
+        {
+            var reservation = await _unitOfWork.reservationRepository.Get(r => r.Id == id);
+            if (reservation == null) {
+                throw new KeyNotFoundException($"Reservation with ID {id} not found.");
+            }
+
+            if(reservation.WorkerId != currentUserId)
+            {
+                throw new UnauthorizedAccessException("You are not allowed to delete someone else's reservation.");
+            }
+            
+            _unitOfWork.reservationRepository.Remove(reservation);
+            await _unitOfWork.Save();
+
+        }
     }
 }
