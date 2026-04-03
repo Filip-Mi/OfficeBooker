@@ -25,7 +25,7 @@ namespace OfficeBooker.Controllers
         {
             var offices = await _officeService.GetAllOfficesAsync();
 
-            var officesDTO = offices.Adapt<OfficeDTO>();
+            var officesDTO = offices.Adapt<IEnumerable<OfficeDTO>>();
             return Ok(officesDTO);
         }
         [HttpPost]
