@@ -5,15 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OfficeBooker.DataAccess.Data;
 
 #nullable disable
 
 namespace OfficeBooker.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260403083644_AddOfficeReservationRelationship")]
-    partial class AddOfficeReservationRelationship
+    [Migration("20260403170812_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +49,22 @@ namespace OfficeBooker.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
+                            ConcurrencyStamp = "c1c1c1c1-c1c1-c1c1-c1c1-c1c1c1c1c1c1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "3d6f185f-4c1f-557g-97bg-594e67ge8321",
+                            ConcurrencyStamp = "d2d2d2d2-d2d2-d2d2-d2d2-d2d2d2d2d2d2",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -137,6 +152,18 @@ namespace OfficeBooker.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
+                        },
+                        new
+                        {
+                            UserId = "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e",
+                            RoleId = "3d6f185f-4c1f-557g-97bg-594e67ge8321"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -182,6 +209,40 @@ namespace OfficeBooker.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Offices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 4,
+                            Equipment = "Monitor, Whiteboard",
+                            FloorNumber = 1,
+                            OfficeNumber = 101
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Capacity = 2,
+                            Equipment = "Dual Monitor",
+                            FloorNumber = 1,
+                            OfficeNumber = 102
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Capacity = 6,
+                            Equipment = "Projector, Conference Mic",
+                            FloorNumber = 2,
+                            OfficeNumber = 201
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Capacity = 1,
+                            Equipment = "Standing Desk",
+                            FloorNumber = 3,
+                            OfficeNumber = 301
+                        });
                 });
 
             modelBuilder.Entity("OfficeBooker.Models.Reservation", b =>
@@ -292,6 +353,44 @@ namespace OfficeBooker.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3",
+                            Email = "admin@office.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Name = "Adam",
+                            NormalizedEmail = "ADMIN@OFFICE.COM",
+                            NormalizedUserName = "ADMIN@OFFICE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPP97ZR1UNP6eqlqngYOreeuul1yi+fhEx7/xbByV3NfG2peefpyJ4+6NtxTDpZHUA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3",
+                            Surname = "Kowalski",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@office.com"
+                        },
+                        new
+                        {
+                            Id = "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2",
+                            Email = "user@office.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Name = "Jan",
+                            NormalizedEmail = "USER@OFFICE.COM",
+                            NormalizedUserName = "USER@OFFICE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJrVvgVKx5jIXVP3zOwt0qKDbhMbzFVf3VsEf6FdzF4EvEHbmsqEz4Vs7KF164+Rcw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2",
+                            Surname = "Nowak",
+                            TwoFactorEnabled = false,
+                            UserName = "user@office.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

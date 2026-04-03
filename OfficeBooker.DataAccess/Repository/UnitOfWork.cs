@@ -1,5 +1,4 @@
-﻿using OfficeBooker.DataAccess.Data;
-using OfficeBooker.DataAccess.Repository.I_Repository;
+﻿using OfficeBooker.DataAccess.Repository.I_Repository;
 namespace OfficeBooker.DataAccess.Repository
 {
     public class UnitOfWork : IUnitOfWork

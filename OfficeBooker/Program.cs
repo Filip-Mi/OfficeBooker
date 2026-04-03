@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using OfficeBooker.DataAccess.Data;
 using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Middleware;

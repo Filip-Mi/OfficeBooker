@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace OfficeBooker.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialIdentitySetup : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -202,6 +204,44 @@ namespace OfficeBooker.DataAccess.Migrations
                         principalTable: "Offices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", "c1c1c1c1-c1c1-c1c1-c1c1-c1c1c1c1c1c1", "Admin", "ADMIN" },
+                    { "3d6f185f-4c1f-557g-97bg-594e67ge8321", "d2d2d2d2-d2d2-d2d2-d2d2-d2d2d2d2d2d2", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d", 0, "f3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3", "admin@office.com", true, false, null, "Adam", "ADMIN@OFFICE.COM", "ADMIN@OFFICE.COM", "AQAAAAIAAYagAAAAEPP97ZR1UNP6eqlqngYOreeuul1yi+fhEx7/xbByV3NfG2peefpyJ4+6NtxTDpZHUA==", null, false, "f3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3", "Kowalski", false, "admin@office.com" },
+                    { "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e", 0, "e2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2", "user@office.com", true, false, null, "Jan", "USER@OFFICE.COM", "USER@OFFICE.COM", "AQAAAAIAAYagAAAAEJrVvgVKx5jIXVP3zOwt0qKDbhMbzFVf3VsEf6FdzF4EvEHbmsqEz4Vs7KF164+Rcw==", null, false, "e2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2", "Nowak", false, "user@office.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Offices",
+                columns: new[] { "Id", "Capacity", "Equipment", "FloorNumber", "OfficeNumber" },
+                values: new object[,]
+                {
+                    { 1, 4, "Monitor, Whiteboard", 1, 101 },
+                    { 2, 2, "Dual Monitor", 1, 102 },
+                    { 3, 6, "Projector, Conference Mic", 2, 201 },
+                    { 4, 1, "Standing Desk", 3, 301 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d" },
+                    { "3d6f185f-4c1f-557g-97bg-594e67ge8321", "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e" }
                 });
 
             migrationBuilder.CreateIndex(

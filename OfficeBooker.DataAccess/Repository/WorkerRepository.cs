@@ -1,5 +1,4 @@
-﻿using OfficeBooker.DataAccess.Data;
-using OfficeBooker.DataAccess.Repository.I_Repository;
+﻿using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
 
 namespace OfficeBooker.DataAccess.Repository
@@ -12,7 +11,7 @@ namespace OfficeBooker.DataAccess.Repository
         }
         public void Update(Worker worker)
         {
-            _db.Workers.Update(worker);
+            _db.Update(worker);
         }
     }
 }

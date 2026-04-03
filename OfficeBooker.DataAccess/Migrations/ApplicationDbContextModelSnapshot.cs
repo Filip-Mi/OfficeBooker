@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OfficeBooker.DataAccess.Data;
 
 #nullable disable
 
@@ -52,14 +51,14 @@ namespace OfficeBooker.DataAccess.Migrations
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "d0897fd3-0475-42fb-bed3-01e7380813bb",
+                            ConcurrencyStamp = "c1c1c1c1-c1c1-c1c1-c1c1-c1c1c1c1c1c1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "3d6f185f-4c1f-557g-97bg-594e67ge8321",
-                            ConcurrencyStamp = "3190e6ef-2f54-4b00-9c24-61f3031603c4",
+                            ConcurrencyStamp = "d2d2d2d2-d2d2-d2d2-d2d2-d2d2d2d2d2d2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -357,7 +356,7 @@ namespace OfficeBooker.DataAccess.Migrations
                         {
                             Id = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aae5014d-83e7-4614-aa31-14829b2419ed",
+                            ConcurrencyStamp = "f3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3",
                             Email = "admin@office.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -366,7 +365,7 @@ namespace OfficeBooker.DataAccess.Migrations
                             NormalizedUserName = "ADMIN@OFFICE.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEPP97ZR1UNP6eqlqngYOreeuul1yi+fhEx7/xbByV3NfG2peefpyJ4+6NtxTDpZHUA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "432b4cd8-1475-4d85-9ea1-997632121b0b",
+                            SecurityStamp = "f3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3",
                             Surname = "Kowalski",
                             TwoFactorEnabled = false,
                             UserName = "admin@office.com"
@@ -375,7 +374,7 @@ namespace OfficeBooker.DataAccess.Migrations
                         {
                             Id = "b2c3d4e5-f6a7-5b6c-9d0e-1f2a3b4c5d6e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d59a4af0-8dda-4293-a9ba-c7c2bf3f047b",
+                            ConcurrencyStamp = "e2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2",
                             Email = "user@office.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
@@ -384,7 +383,7 @@ namespace OfficeBooker.DataAccess.Migrations
                             NormalizedUserName = "USER@OFFICE.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJrVvgVKx5jIXVP3zOwt0qKDbhMbzFVf3VsEf6FdzF4EvEHbmsqEz4Vs7KF164+Rcw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "99c0bcd9-db60-4f83-8821-d2d17e4e458b",
+                            SecurityStamp = "e2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2",
                             Surname = "Nowak",
                             TwoFactorEnabled = false,
                             UserName = "user@office.com"
