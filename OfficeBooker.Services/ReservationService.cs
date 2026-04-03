@@ -60,13 +60,8 @@ namespace OfficeBooker.Services
                 throw new KeyNotFoundException("Office not found.");
             }
 
-            var overlappingReservation = await _unitOfWork.reservationRepository.Get(r =>
-                r.OfficeId == dto.OfficeId &&
-                r.ReservationStartTime < dto.ReservationEndTime &&
-                r.ReservationEndTime > dto.ReservationStartTime
-            );
-
-            if (overlappingReservation != null)
+            var reservationEntity = dto.Adapt<Reservation>();
+            if (!await _unitOfWork.reservationRepository.IsReservationAvailable(reservationEntity))
             {
                 throw new OfficeAlreadyReservedException(dto.OfficeId);
             }

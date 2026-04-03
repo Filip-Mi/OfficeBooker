@@ -1,6 +1,7 @@
 ﻿using OfficeBooker.DataAccess.Data;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
+using System.Linq.Expressions;
 
 namespace OfficeBooker.DataAccess.Repository
 {
@@ -13,20 +14,16 @@ namespace OfficeBooker.DataAccess.Repository
             _db = db;
         }
 
-        public bool IsReservationAvailable(Reservation reservation)
+        public async Task<bool> IsReservationAvailable(Reservation reservation)
         {
-            bool IsStartTimeOk = true;
-            bool IsEndTimeOk = true;
-            IQueryable<Reservation> beginingTime = dbSet;
-                beginingTime = (IQueryable<Reservation>)beginingTime.Where(res => res.OfficeId == reservation.OfficeId)
-                .Where(res => res.ReservationStartTime.Date == reservation.ReservationStartTime.Date)
-                .Where(res => res.ReservationStartTime <= reservation.ReservationStartTime && res.ReservationStartTime >= reservation.ReservationEndTime).ToList();
+            bool hasCollision = _db.Reservations.Any(existing =>
+                existing.OfficeId == reservation.OfficeId &&
+                reservation.ReservationStartTime < existing.ReservationEndTime &&
+                existing.ReservationStartTime < reservation.ReservationEndTime);
 
-           
-
-            return false;
+            return !hasCollision;
         }
 
-        
+
     }
 }

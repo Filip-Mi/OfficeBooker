@@ -5,6 +5,6 @@ namespace OfficeBooker.DataAccess.Repository.I_Repository
 {
     public interface IReservationRepository : IRepository<Models.Reservation>
     {
-        bool IsReservationAvailable(Reservation reservation);
+        Task<bool> IsReservationAvailable(Reservation reservation);
     }
 }
