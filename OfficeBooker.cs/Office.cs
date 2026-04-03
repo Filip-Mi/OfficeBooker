@@ -13,4 +13,5 @@ namespace OfficeBooker.Models;
         [Required]
         public int FloorNumber {  get; set;}
         public string Equipment { get; set; } = default!;
+        public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 }
