@@ -37,16 +37,14 @@ namespace OfficeBooker.Controllers
             await _officeService.CreateOfficeAsync(office);
             
             return Ok(office);
-        }
-        [HttpGet]
-        [HttpGet("{id}")]
+        } 
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetOfficeById(int id)
         {
             var office = _officeService.GetOfficeByIdAsync(id);
             return Ok(office);
         }
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteOffice(int id)
         {
             await _officeService.DeleteOfficeAsync(id);
