@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OfficeBooker.cs\OfficeBooker.Models.csproj" />
+    <ProjectReference Include="..\OfficeBooker.Models\OfficeBooker.Models.csproj" />
   </ItemGroup>
 
 
