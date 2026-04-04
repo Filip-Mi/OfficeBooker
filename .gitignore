@@ -383,3 +383,23 @@ secrets.json
 
 # Ignore Visual Studio user-specific files
 .vs/
+## --- Visual Studio ---
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docstates
+
+## --- .NET Core ---
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## --- Databases ---
+*.db
+*.sqlite
+
+## --- OS files ---
+.DS_Store
+Thumbs.db
