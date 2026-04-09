@@ -12,6 +12,7 @@ using OfficeBooker.Models.Validators;
 using OfficeBooker.Services;
 using OfficeBooker.Services.IServices;
 using Scalar.AspNetCore;
+using FluentValidation.AspNetCore;
 using System.Text;
 
 namespace OfficeBooker
@@ -21,7 +22,7 @@ namespace OfficeBooker
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            // Database Connection
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -33,7 +34,7 @@ namespace OfficeBooker
                             errorNumbersToAdd: null);
                     }
                 ));
-
+            //Scalar OpenAPI
             builder.Services.AddOpenApi(options =>
             {
                 options.AddDocumentTransformer(async (document, context, cancellationToken) =>
@@ -43,7 +44,7 @@ namespace OfficeBooker
                         Type = SecuritySchemeType.Http,
                         Scheme = "bearer",
                         BearerFormat = "JWT",
-                        Description = "Wklej tutaj swój token JWT",
+                        Description = "Paste your token here",
                         Name = "Authorization",
                         In = ParameterLocation.Header
                     };
@@ -79,16 +80,24 @@ namespace OfficeBooker
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             
+            //Services
             builder.Services.AddScoped<IReservationService, ReservationService>();
             builder.Services.AddScoped<IOfficeService, OfficeService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddControllers();
 
+            //Global Exceptions
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
 
+            // Validation
             builder.Services.AddValidatorsFromAssemblyContaining<ReservationCreateValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<LoginWorkerValidator>();
 
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddFluentValidationClientsideAdapters();
+            
+            //JwT Tokens
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var secretKey = jwtSettings["Key"];
 

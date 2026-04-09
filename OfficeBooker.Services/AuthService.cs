@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using OfficeBooker.Models;
 using OfficeBooker.Models.DTOs;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,11 +16,13 @@ namespace OfficeBooker.Services.IServices
         private readonly UserManager<Worker> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        public AuthService(UserManager<Worker> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        private readonly IValidator<LoginWorkerDTO> _loginWorkerValidator;
+        public AuthService(UserManager<Worker> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration , IValidator<LoginWorkerDTO> loginWorkerValidator )
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _loginWorkerValidator = loginWorkerValidator;
         }
         public async Task<object?> GetCurrentUserAsync(string userId)
         {
@@ -36,9 +40,18 @@ namespace OfficeBooker.Services.IServices
 
         public async Task<AuthResponseDTO?> LoginAsync(LoginWorkerDTO model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password)) return null;
+            //Validation
+            var validationResult = await _loginWorkerValidator.ValidateAsync(model);
+            if (!validationResult.IsValid)
+            {
+                throw new FluentValidation.ValidationException(validationResult.Errors);
+            }
 
+            //Buisness Logic
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password)) throw new UnauthorizedAccessException("Invalid email or password.");
+
+            // Token Generation
             var userRoles = await _userManager.GetRolesAsync(user);
             var authClaims = new List<Claim>
         {

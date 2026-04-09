@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace OfficeBooker.Models.DTOs
+﻿namespace OfficeBooker.Models.DTOs
 {
     public  class LoginWorkerDTO
     {
-        [Required]
-        public string Email { get; set; } = default!;
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = default!;
+        public string? Email { get; set; } 
+        public string? Password { get; set; }
         
     }
 }
