@@ -2,5 +2,6 @@
   <Project Path="OfficeBooker.DataAccess/OfficeBooker.DataAccess.csproj" />
   <Project Path="OfficeBooker.Models/OfficeBooker.Models.csproj" />
   <Project Path="OfficeBooker.Services/OfficeBooker.Services.csproj" Id="f0ae5d42-03fe-4fa3-a643-682362353800" />
+  <Project Path="OfficeBooker.UnitTests/OfficeBooker.UnitTests.csproj" Id="a2c080e7-22bd-44ad-855f-13d134063a88" />
   <Project Path="OfficeBooker/OfficeBooker.csproj" />
 </Solution>
