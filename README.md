@@ -34,9 +34,9 @@ The solution is divided into logical layers to ensure **Separation of Concerns**
 * SQL Server (LocalDB or Express)
 
 ### Installation
-1. **Clone the repository:**
-   ``bash
-   git clone [https://github.com/](https://github.com/)FilipMi/OfficeBooker.git
+1.**Clone the repository:**
+  bash
+   git clone [https://github.com/FilipMi/OfficeBooker.git](https://github.com/FilipMi/OfficeBooker.git)
 
 2.**Setup Local Configuration:**
 Locate `appsettings.example.json` in the API project.
@@ -60,6 +60,21 @@ The API returns standardized error responses even for validation failures, thank
 ## 🧪 Testing
 To run the unit tests and verify the business logic:
 dotnet test
+ 
+ ---
+
+## 🚀 Roadmap / Future Enhancements
+
+While the core functionality is solid, I plan to expand the system with the following features:
+
+- [ ] **Add more advanced CRUD:** Implement update reservations method.
+- [ ] **Email Notifications:** Integrate SendGrid to notify workers about successful bookings or upcoming reservation changes.
+- [ ] **Admin Dashboard:** Add a visual dashboard with statistics on office occupancy and peak booking hours.
+- [ ] **Advanced Filtering:** Enable users to filter desks by equipment (e.g., "dual monitor", "standing desk").
+- [ ] **Calendar Integration:** Sync reservations with Google Calendar or Microsoft Outlook.
+- [ ] **Basic UI:** Develop a basic UI using React or Blazor to provide a seamless user experience.
+
+---
 
 ## 👤 Author
 Filip Mirzejewski
