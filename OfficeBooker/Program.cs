@@ -1,9 +1,11 @@
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OfficeBooker.API.Extensions;
 using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Middleware;
@@ -12,7 +14,7 @@ using OfficeBooker.Models.Validators;
 using OfficeBooker.Services;
 using OfficeBooker.Services.IServices;
 using Scalar.AspNetCore;
-using FluentValidation.AspNetCore;
+using System.Reflection;
 using System.Text;
 
 namespace OfficeBooker
@@ -37,6 +39,7 @@ namespace OfficeBooker
             //Scalar OpenAPI
             builder.Services.AddOpenApi(options =>
             {
+                options.AddXmlDocumentation();
                 options.AddDocumentTransformer(async (document, context, cancellationToken) =>
                 {
                     var securityScheme = new OpenApiSecurityScheme
@@ -48,7 +51,7 @@ namespace OfficeBooker
                         Name = "Authorization",
                         In = ParameterLocation.Header
                     };
-
+                        
                     document.Components ??= new OpenApiComponents();
                     document.Components.SecuritySchemes["Bearer"] = securityScheme;
 
@@ -127,7 +130,9 @@ namespace OfficeBooker
                 app.MapOpenApi();
                 app.MapScalarApiReference(options =>
                 {
-                    options.Title = "OfficeBooker API";
+                    options.WithTitle("OfficeBooker API")
+               .WithTheme(ScalarTheme.Moon) 
+               .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
                     options.AddPreferredSecuritySchemes("Bearer");
                     
                 });

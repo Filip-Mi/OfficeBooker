@@ -6,18 +6,22 @@ using System.Security.Claims;
 
 namespace OfficeBooker.Controllers
 {
-    [Route("api/[controller]")] 
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class ReservationController : ControllerBase
     {
         private readonly IReservationService _reservationService;
-        
+
         public ReservationController(IReservationService reservationService)
         {
             _reservationService = reservationService;
         }
 
+        /// <summary>
+        /// Creates a new reservation for the currently authenticated user.
+        /// </summary>
+        /// <param name="dto">Reservation details including office ID and requested time slot.</param>
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> CreateReservation([FromBody] ReservationCreateDTO dto)
@@ -31,6 +35,9 @@ namespace OfficeBooker.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Retrieves all reservations associated with the logged-in user.
+        /// </summary>
         [HttpGet("my")]
         public async Task<IActionResult> GetMyReservations()
         {
@@ -42,6 +49,11 @@ namespace OfficeBooker.Controllers
             var reservations = await _reservationService.GetMyReservationsAsync(userId);
             return Ok(reservations);
         }
+
+        /// <summary>
+        /// Cancels an existing reservation. Only the owner of the reservation can perform this action.
+        /// </summary>
+        /// <param name="id">The unique ID of the reservation to be removed.</param>
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteReservation(int id)
         {

@@ -16,7 +16,7 @@ OfficeBooker API is a robust backend solution for managing office spaces and des
 * **Validation:** FluentValidation
 * **Mapping:** AutoMapper
 * **Architecture:** Repository Pattern & Unit of Work
-* **Documentation:** Scalar & Swagger UI
+* **Documentation:** Scalar 
 * **Testing:** xUnit, Moq, FluentAssertions
 
 ## 🏗 Project Structure
