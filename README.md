@@ -1,8 +1,8 @@
 # OfficeBooker API
-OfficeBooker API is a robust backend solution for managing office spaces and desk reservations. Built with .NET 10, it offers a comprehensive set of features to streamline office management and enhance the booking experience for workers.
+OfficeBooker API is a backend solution for managing office reservations. Built with .NET 10, it offers a set of features to offices management
 ## 🚀 Key Features
 
-* **Office Management:** Full CRUD operations for managing office spaces and desk capacities.
+* **Office Management:** Full CRUD operations for managing office.
 * **Reservation System:** Advanced booking logic with overlapping date validation.
 * **Global Exception Handling:** Centralized error management using the new .NET 10 `IExceptionHandler`.
 * **Fluent Validation:** Clean DTOs with decoupled validation rules for maximum testability.
@@ -31,7 +31,7 @@ The solution is divided into logical layers to ensure **Separation of Concerns**
 
 ### Prerequisites
 * [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-* SQL Server (LocalDB or Express)
+* SQL Server
 
 ### Installation
 1.**Clone the repository:**
@@ -95,6 +95,7 @@ dotnet test
 
 While the core functionality is solid, I plan to expand the system with the following features:
 
+- [ ] **Tests :** Add more tests in 'OfficeBooker.Tests'.
 - [ ] **Add more advanced CRUD:** Implement update reservations method.
 - [ ] **Email Notifications:** Integrate SendGrid to notify workers about successful bookings or upcoming reservation changes.
 - [ ] **Admin Dashboard:** Add a visual dashboard with statistics on office occupancy and peak booking hours.
