@@ -55,7 +55,35 @@ Once the application is running, you can explore and test the endpoints using:
 
 Scalar : https://localhost:[PORT]/scalar/v1
 
-The API returns standardized error responses even for validation failures, thanks to the integrated Global Exception Handler
+* **Descriptions:** Every endpoint includes detailed summaries and parameter descriptions generated from XML comments.
+* **Authentication:** Fully supports JWT Bearer authorization directly within the browser.
+* **Standardized Errors:** Documentation includes expected error schemas (400, 401, 404) handled by the Global Exception Provider.
+
+## Testing Authenticated Endpoints
+1. Use the `/api/Auth/login` endpoint to obtain a JWT token.
+2. Click the **"Authorize"** button (or the lock icon) in Scalar.
+3. Paste your token.
+4. Now you can test protected resources like `/api/Auth/me`.
+
+
+## 👤 Seeded Test Accounts
+The database is pre-configured with the following accounts for testing roles and permissions:
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Administrator** | `admin@office.com` | `Admin123!` |
+| **Worker** | `user@office.com` | `User123!` |
+
+## 🏢 Sample Offices
+The following offices are available in the system by default. You can use their **IDs** (1-4) to test reservations:
+
+| ID | Office | Floor | Capacity | Equipment |
+|:---|:---|:---|:---|:---|
+| **1** | 101 | 1 | 4 | Monitor, Whiteboard |
+| **2** | 102 | 1 | 2 | Dual Monitor |
+| **3** | 201 | 2 | 6 | Projector, Conference Mic |
+| **4** | 301 | 3 | 1 | Standing Desk |
+
 
 ## 🧪 Testing
 To run the unit tests and verify the business logic:
