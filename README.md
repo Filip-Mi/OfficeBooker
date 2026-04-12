@@ -1,25 +1,25 @@
 # OfficeBooker API
-OfficeBooker API is a backend solution for managing office reservations. Built with .NET 10, it offers a set of features to offices management
-## 🚀 Key Features
+OfficeBooker API is a backend solution for managing office reservations. Built with .NET 10,it offers a comprehensive suite of features for office space management.
+### 🚀 Key Features
 
-* **Office Management:** Full CRUD operations for managing office.
+* **Office Management:** Full CRUD operations for managing office spaces.
 * **Reservation System:** Advanced booking logic with overlapping date validation.
 * **Global Exception Handling:** Centralized error management using the new .NET 10 `IExceptionHandler`.
 * **Fluent Validation:** Clean DTOs with decoupled validation rules for maximum testability.
 * **JWT Authentication:** Secure access control for workers and administrators.
 * **Unit Testing:** Core business logic covered with xUnit and Moq.
 
-## 🛠 Tech Stack
-* **Backend:** ASP.NET Core 10
-* **Database:** SQL Server
-* **ORM:** Entity Framework Core
-* **Validation:** FluentValidation
-* **Mapping:** AutoMapper
-* **Architecture:** Repository Pattern & Unit of Work
-* **Documentation:** Scalar 
-* **Testing:** xUnit, Moq, FluentAssertions
+### 🛠 Tech Stack
+* **Backend:** ASP.NET Core 10.
+* **Database:** SQL Server.
+* **ORM:** Entity Framework Core.
+* **Validation:** FluentValidation.
+* **Mapping:** AutoMapper.
+* **Architecture:** Repository Pattern & Unit of Work.
+* **Documentation:** Scalar .
+* **Testing:** xUnit, Moq, FluentAssertions.
 
-## 🏗 Project Structure
+### 🏗 Project Structure
 
 The solution is divided into logical layers to ensure **Separation of Concerns**:
 
@@ -32,6 +32,7 @@ The solution is divided into logical layers to ensure **Separation of Concerns**
 ### Prerequisites
 * [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 * SQL Server
+* EF Core Tools (`dotnet tool install --global dotnet-ef`)
 
 ### Installation
 1.**Clone the repository:**
@@ -49,11 +50,12 @@ dotnet ef database update --project OfficeBooker.DataAccess --startup-project Of
 
 4.**Run the API:**
 dotnet run --project OfficeBooker.API
+After running the API, check the console output for the assigned port.
 
-## 📖API Documentation
+### 📖API Documentation
 Once the application is running, you can explore and test the endpoints using:
 
-Scalar : https://localhost:[PORT]/scalar/v1
+Scalar : https://localhost:[PORT]/scalar/v1.
 
 * **Descriptions:** Every endpoint includes detailed summaries and parameter descriptions generated from XML comments.
 * **Authentication:** Fully supports JWT Bearer authorization directly within the browser.
@@ -66,7 +68,7 @@ Scalar : https://localhost:[PORT]/scalar/v1
 4. Now you can test protected resources like `/api/Auth/me`.
 
 
-## 👤 Seeded Test Accounts
+### 👤 Seeded Test Accounts
 The database is pre-configured with the following accounts for testing roles and permissions:
 
 | Role | Email | Password |
@@ -74,7 +76,7 @@ The database is pre-configured with the following accounts for testing roles and
 | **Administrator** | `admin@office.com` | `Admin123!` |
 | **Worker** | `user@office.com` | `User123!` |
 
-## 🏢 Sample Offices
+### 🏢 Sample Offices
 The following offices are available in the system by default. You can use their **IDs** (1-4) to test reservations:
 
 | ID | Office | Floor | Capacity | Equipment |
@@ -85,13 +87,13 @@ The following offices are available in the system by default. You can use their 
 | **4** | 301 | 3 | 1 | Standing Desk |
 
 
-## 🧪 Testing
+### 🧪 Testing
 To run the unit tests and verify the business logic:
 dotnet test
  
  ---
 
-## 🚀 Roadmap / Future Enhancements
+### 🚀 Roadmap / Future Enhancements
 
 While the core functionality is solid, I plan to expand the system with the following features:
 
@@ -105,7 +107,7 @@ While the core functionality is solid, I plan to expand the system with the foll
 
 ---
 
-## 👤 Author
+### 👤 Author
 Filip Mirzejewski
 
 GitHub: https://github.com/FilipMi
