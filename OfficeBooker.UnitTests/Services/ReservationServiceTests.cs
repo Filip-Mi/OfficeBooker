@@ -56,7 +56,7 @@ namespace OfficeBooker.UnitTests
                 .ReturnsAsync(new Office { Id = 1, Capacity = 10 });
 
             _unitOfWorkMock.Setup(u => u.reservationRepository.IsReservationAvailable(It.IsAny<Reservation>()))
-                .ReturnsAsync(true); // Zwracamy true = biuro wolne
+                .ReturnsAsync(true);
 
             // Act
             var result = await _reservationService.CreateReservationAsync(dto, userId);
@@ -84,26 +84,40 @@ namespace OfficeBooker.UnitTests
         [Fact]
         public async Task Create_ShouldThrowOfficeAlreadyReservedException_WhenDatesOverlap()
         {
-            var dto = new ReservationCreateDTO { OfficeId = 1, ReservationStartTime = DateTime.Now.AddDays(1), ReservationEndTime = DateTime.Now.AddDays(1).AddHours(2) };
+            // Arrange
+            var dto = new ReservationCreateDTO
+            {
+                OfficeId = 1,
+                ReservationStartTime = DateTime.Now.AddDays(1),
+                ReservationEndTime = DateTime.Now.AddDays(1).AddHours(2)
+            };
+
             _validatorMock.Setup(v => v.ValidateAsync(dto, default)).ReturnsAsync(new ValidationResult());
             _userManagerMock.Setup(u => u.FindByIdAsync(It.IsAny<string>())).ReturnsAsync(new Worker());
             _unitOfWorkMock.Setup(u => u.officeRepository.Get(It.IsAny<Expression<Func<Office, bool>>>())).ReturnsAsync(new Office { Id = 1 });
-            _unitOfWorkMock.Setup(u => u.reservationRepository.GetAll(It.IsAny<Expression<Func<Reservation, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<Reservation> { new Reservation() });
 
+            _unitOfWorkMock.Setup(u => u.reservationRepository.IsReservationAvailable(It.IsAny<Reservation>()))
+                .ReturnsAsync(false);
+
+            // Act
             Func<Task> act = async () => await _reservationService.CreateReservationAsync(dto, "user-id");
+
+            // Assert
             await act.Should().ThrowAsync<OfficeAlreadyReservedException>();
         }
 
         [Fact]
         public async Task Delete_ShouldSucceed_WhenUserIsOwner()
         {
+            // Arrange
             var userId = "user-1";
             var res = new Reservation { Id = 1, WorkerId = userId };
             _unitOfWorkMock.Setup(u => u.reservationRepository.Get(It.IsAny<Expression<Func<Reservation, bool>>>())).ReturnsAsync(res);
 
+            // Act
             await _reservationService.DeleteReservationAsync(1, userId);
 
+            // Assert
             _unitOfWorkMock.Verify(u => u.reservationRepository.Remove(res), Times.Once);
             _unitOfWorkMock.Verify(u => u.Save(), Times.Once);
         }
