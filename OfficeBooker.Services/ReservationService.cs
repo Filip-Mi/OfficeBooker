@@ -105,5 +105,25 @@ namespace OfficeBooker.Services
             await _unitOfWork.Save();
 
         }
+        public async Task<ReservationRespondDTO> GetByIdAsync(int id)
+        {
+            var reservation = await _unitOfWork.reservationRepository.Get(
+                filter: r => r.Id == id
+                );
+
+
+            if (reservation == null)
+            {
+                throw new ReservationNotFoundException(id); 
+            }
+
+            var response = reservation.Adapt<ReservationRespondDTO>();
+            if (reservation.Office != null)
+            {
+                response.OfficeNumber = reservation.Office.OfficeNumber;
+                response.FloorNumber = reservation.Office.FloorNumber;
+            }
+            return response;
+        }
     }
 }
