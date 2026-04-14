@@ -37,7 +37,7 @@ The solution is divided into logical layers to ensure **Separation of Concerns**
 ### Installation
 1.**Clone the repository:**
   bash
-   git clone [https://github.com/FilipMi/OfficeBooker.git](https://github.com/FilipMi/OfficeBooker.git)
+   git clone [https://github.com/FilipMi/OfficeBooker.git](https://github.com/Filip-Mi/OfficeBooker.git)
 
 2.**Setup Local Configuration:**
 Locate `appsettings.example.json` in the API project.
@@ -110,4 +110,4 @@ While the core functionality is solid, I plan to expand the system with the foll
 ### 👤 Author
 Filip Mirzejewski
 
-GitHub: https://github.com/FilipMi
+GitHub: https://github.com/Filip-Mi
