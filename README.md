@@ -7,7 +7,7 @@ OfficeBooker API is a backend solution for managing office reservations. Built w
 * **Global Exception Handling:** Centralized error management using the new .NET 10 `IExceptionHandler`.
 * **Fluent Validation:** Clean DTOs with decoupled validation rules for maximum testability.
 * **JWT Authentication:** Secure access control for workers and administrators.
-* **Unit Testing:** Core business logic covered with xUnit and Moq.
+
 
 ### 🛠 Tech Stack
 * **Backend:** ASP.NET Core 10.
@@ -27,7 +27,7 @@ The solution is divided into logical layers to ensure **Separation of Concerns**
 * **`OfficeBooker.Services`**: Business logic, Service implementations, and DTO Validators.
 * **`OfficeBooker.DataAccess`**: Database Context, Migrations, and Repository implementations.
 * **`OfficeBooker.Models`**: Database Entities, Data Transfer Objects (DTOs), and Custom Exceptions.
-* **`OfficeBooker.Tests`**: Unit tests for Services and Validation logic.
+* **`OfficeBooker.Tests`**: Unit tests for Services.(Currently Under Construction)
 
 ### Prerequisites
 * [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
@@ -40,16 +40,16 @@ The solution is divided into logical layers to ensure **Separation of Concerns**
    git clone [https://github.com/Filip-Mi/OfficeBooker.git](https://github.com/Filip-Mi/OfficeBooker.git)
 
 2.**Setup Local Configuration:**
-Locate `appsettings.example.json` in the API project.
+Locate `appsettings.example.json` in the  project.
 Create a copy named appsettings.json.
 Update the DefaultConnection string with your local SQL Server details and set your Jwt:Key
 
 3.**Apply Migrations:**
 Open your terminal in the solution folder and run:
-dotnet ef database update --project OfficeBooker.DataAccess --startup-project OfficeBooker.API
+dotnet ef database update --project OfficeBooker.DataAccess --startup-project OfficeBooker
 
 4.**Run the API:**
-dotnet run --project OfficeBooker.API
+dotnet run --project OfficeBooker
 After running the API, check the console output for the assigned port.
 
 ### 📖API Documentation
