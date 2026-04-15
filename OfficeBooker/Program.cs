@@ -96,6 +96,7 @@ namespace OfficeBooker
             // Validation
             builder.Services.AddValidatorsFromAssemblyContaining<ReservationCreateValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<LoginWorkerValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateOfficeValidator>();
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();

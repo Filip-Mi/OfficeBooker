@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using FluentValidation;
+using Mapster;
 using OfficeBooker.DataAccess.Repository;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
@@ -11,14 +12,20 @@ namespace OfficeBooker.Services
     public class OfficeService : IOfficeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public OfficeService(IUnitOfWork unitOfWork)
+        private readonly IValidator<OfficeCreateDTO> _validator;
+        public OfficeService(IUnitOfWork unitOfWork , IValidator<OfficeCreateDTO> validator)
         {
             _unitOfWork = unitOfWork;
+            _validator = validator;
         }
         public async Task<OfficeDTO> CreateOfficeAsync(OfficeCreateDTO officeDTO)
         {
             var office = officeDTO.Adapt<Office>();
-
+            var validationResult = await _validator.ValidateAsync(officeDTO);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
             _unitOfWork.officeRepository.Add(office);
             await _unitOfWork.Save();
             return office.Adapt<OfficeDTO>();
