@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FluentValidation;
 using Moq;
 using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
@@ -13,10 +14,12 @@ namespace OfficeBooker.UnitTests.Services
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly OfficeService _officeService;
         private readonly Mock<IOfficeRepository> _officeRepositoryMock;
+        private readonly Mock<IValidator<OfficeCreateDTO>> _validatorMock;
         public OfficeServiceTest()
         {
             _unitOfWorkMock = new Mock<IUnitOfWork>();
-            _officeService = new OfficeService(_unitOfWorkMock.Object);
+            _validatorMock = new Mock<IValidator<OfficeCreateDTO>>();
+            _officeService = new OfficeService(_unitOfWorkMock.Object, _validatorMock.Object);
             _officeRepositoryMock = new Mock<IOfficeRepository>();
             _unitOfWorkMock.Setup(u => u.officeRepository).Returns(_officeRepositoryMock.Object);
         }
@@ -58,11 +61,37 @@ namespace OfficeBooker.UnitTests.Services
                 OfficeNumber = 999,
                 Equipment = "Test Equipment"
             };
+            _validatorMock.Setup(v=> v.ValidateAsync(office, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FluentValidation.Results.ValidationResult());
             //Act 
             var respond = await _officeService.CreateOfficeAsync(office);
             // Assert
             _unitOfWorkMock.Verify(u => u.officeRepository.Add(It.IsAny<Office>()), Times.Once);
             _unitOfWorkMock.Verify(u => u.Save(), Times.Once);
+        }
+        [Fact]
+        public async Task CreateOfficeAsync_ShouldThrowValidationException_WhenDataIsInvalid()
+        {
+            // Arrange
+            var office = new OfficeCreateDTO
+            {
+                Capacity = 0,
+                FloorNumber = 212,
+                OfficeNumber = -12,
+                Equipment = "Test Equipment"
+            };
+            var validationFailures = new List<FluentValidation.Results.ValidationFailure>
+            {
+                new FluentValidation.Results.ValidationFailure("Capacity", "Capacity must be greater than 0."),
+                new FluentValidation.Results.ValidationFailure("OfficeNumber", "OfficeNumber must be greater than 0.")
+            };
+            _validatorMock.Setup(v => v.ValidateAsync(office, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FluentValidation.Results.ValidationResult(validationFailures));
+
+            //Act 
+            Func<Task> act = async () => await _officeService.CreateOfficeAsync(office);
+            // Assert
+            await Assert.ThrowsAsync<ValidationException>(act);
         }
     }
 }
