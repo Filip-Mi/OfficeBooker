@@ -29,7 +29,7 @@ namespace OfficeBooker.UnitTests.Services
         {
             // Arrange
             var officeId = 1;
-            var fakeOffice = new Office { Id = officeId, OfficeNumber=999};
+            var fakeOffice = new Office { Id = officeId, OfficeNumber = 999 };
             _officeRepositoryMock.Setup(repo => repo.Get(It.IsAny<Expression<Func<Office, bool>>>()))
                     .ReturnsAsync(fakeOffice);
             _unitOfWorkMock.Setup(u => u.officeRepository).Returns(_officeRepositoryMock.Object);
@@ -61,7 +61,7 @@ namespace OfficeBooker.UnitTests.Services
                 OfficeNumber = 999,
                 Equipment = "Test Equipment"
             };
-            _validatorMock.Setup(v=> v.ValidateAsync(office, It.IsAny<CancellationToken>()))
+            _validatorMock.Setup(v => v.ValidateAsync(office, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new FluentValidation.Results.ValidationResult());
             //Act 
             var respond = await _officeService.CreateOfficeAsync(office);
@@ -94,6 +94,52 @@ namespace OfficeBooker.UnitTests.Services
             await act.Should().ThrowAsync<ValidationException>()
                 .WithMessage("*Capacity must be greater than 0.*")
                 .WithMessage("*OfficeNumber must be greater than 0.*");
+        }
+        [Fact]
+        public async Task GetAllOfficesAsync_ShouldReturnAllOffices()
+        {
+            // Arrange
+            _unitOfWorkMock.Setup(u => u.officeRepository.GetAll(It.IsAny<Expression<Func<Office, bool>>>()))
+                .ReturnsAsync(new List<Office>
+                {
+                    new Office { Id = 1, OfficeNumber = 999, Capacity = 10, FloorNumber = 212, Equipment = "Test Equipment" },
+                    new Office { Id = 2, OfficeNumber = 998, Capacity = 8, FloorNumber = 211, Equipment = "Test Equipment" }
+                });
+
+            // Act
+            var result = await _officeService.GetAllOfficesAsync();
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+        [Fact]
+        public async Task DeleteOfficeAsync_ShouldSucced() { 
+         //Arrange
+        var fakeOffice = new Office
+        {
+            Id = 1,
+            OfficeNumber = 999,
+            Capacity = 10,
+            FloorNumber = 212,
+            Equipment = "Test Equipment"
+        };
+            _unitOfWorkMock.Setup(u=>u.officeRepository.Get(It.IsAny<Expression<Func<Office, bool>>>())).ReturnsAsync(fakeOffice);
+        //Act
+         await _officeService.DeleteOfficeAsync(1);
+        //Assert
+        _unitOfWorkMock.Verify(u => u.officeRepository.Remove(It.IsAny<Office>()), Times.Once);
+
+        }
+        [Fact]
+        public async Task DeleteOfficeAsync_ShouldThrowKeyNotFoundException()
+        {
+            //Arrange
+          var id = 1;
+            //Act
+            Func<Task> act = async () => await _officeService.DeleteOfficeAsync(id);
+            //Assert
+            await act.Should().ThrowAsync<KeyNotFoundException>().WithMessage($"*Office with ID {id} not found.*");
+
         }
     }
 }

@@ -36,7 +36,6 @@ namespace OfficeBooker.Services
             var offices = await _unitOfWork.officeRepository.GetAll();
 
             return offices.Adapt<IEnumerable<OfficeDTO>>();
-
         }
         public async Task<OfficeDTO> GetOfficeByIdAsync(int id)
         {
