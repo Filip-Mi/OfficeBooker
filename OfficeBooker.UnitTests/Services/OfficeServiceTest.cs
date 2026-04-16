@@ -47,7 +47,7 @@ namespace OfficeBooker.UnitTests.Services
             //Act
             Func<Task> act = async () => await _officeService.GetOfficeByIdAsync(officeId);
             //Assert
-            await Assert.ThrowsAsync<KeyNotFoundException>(act);
+            await act.Should().ThrowAsync<KeyNotFoundException>();
         }
 
         [Fact]
@@ -91,7 +91,9 @@ namespace OfficeBooker.UnitTests.Services
             //Act 
             Func<Task> act = async () => await _officeService.CreateOfficeAsync(office);
             // Assert
-            await Assert.ThrowsAsync<ValidationException>(act);
+            await act.Should().ThrowAsync<ValidationException>()
+                .WithMessage("*Capacity must be greater than 0.*")
+                .WithMessage("*OfficeNumber must be greater than 0.*");
         }
     }
 }
