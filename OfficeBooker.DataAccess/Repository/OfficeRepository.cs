@@ -14,5 +14,9 @@ namespace OfficeBooker.DataAccess.Repository
         {
             _db.Offices.Update(entity);
         }
+        public bool DoesOfficeExist(int officeId)
+        {
+            return _db.Offices.Any(o => o.Id == officeId);
+        }
     }
 }

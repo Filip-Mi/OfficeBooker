@@ -141,9 +141,9 @@ namespace OfficeBooker.Services
             if(!await _unitOfWork.reservationRepository.IsReservationAvailable(reservationEntity)) {
                 throw new OfficeAlreadyReservedException(reservationEntity.OfficeId);
             }
-            if (_unitOfWork.officeRepository.Get(u => u.Id == reservationEntity.OfficeId) == null)
+            if (!_unitOfWork.officeRepository.DoesOfficeExist(reservationEntity.OfficeId))
             {
-                
+                throw new OfficeDoesNotExistException(reservationEntity.OfficeId);
             }
             await _unitOfWork.reservationRepository.Update(reservationEntity!);
             await _unitOfWork.Save();
