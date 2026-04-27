@@ -62,5 +62,19 @@ namespace OfficeBooker.Controllers
             await _reservationService.DeleteReservationAsync(id, userId);
             return NoContent();
         }
+        /// <summary>
+        /// Updates an existing reservation. Only the owner of the reservation can perform this action.
+        /// </summary>
+        /// <param name="id">The unique ID of the reservation to be updated.</param>
+        /// /// <param name="reservation">The reservation details to be updated.</param>
+       [HttpPut]
+       [Route("update")]
+        public async Task<IActionResult> UpdateReservation(int id, [FromBody] ReservationUpdateDTO reservation)
+        {
+            var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+            await _reservationService.UpdateReservationAsync(id, reservation, userId);
+            return NoContent();
+        }
     }
 }

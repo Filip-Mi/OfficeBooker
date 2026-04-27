@@ -1,5 +1,6 @@
 ﻿using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
+using OfficeBooker.Models.DTOs;
 using System.Linq.Expressions;
 
 namespace OfficeBooker.DataAccess.Repository
@@ -23,6 +24,9 @@ namespace OfficeBooker.DataAccess.Repository
             return !hasCollision;
         }
 
-
+        public async Task Update(Reservation reservation)
+        {
+            _db.Update(reservation);
+        }
     }
 }

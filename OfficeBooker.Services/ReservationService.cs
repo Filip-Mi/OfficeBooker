@@ -125,5 +125,28 @@ namespace OfficeBooker.Services
             }
             return response;
         }
+
+        public async Task UpdateReservationAsync(int id, ReservationUpdateDTO reservation, string currentUserId)
+        {
+            var reservationEntity = await _unitOfWork.reservationRepository.Get(r => r.Id == id);
+            if (reservationEntity == null)
+            {
+                throw new KeyNotFoundException($"Reservation with ID {id} not found.");
+            }
+
+                reservationEntity!.OfficeId = reservation.OfficeId ?? reservationEntity.OfficeId; 
+                reservationEntity.ReservationStartTime = reservation.ReservationStartTime ?? reservationEntity.ReservationStartTime;
+                reservationEntity.ReservationEndTime = reservation.ReservationEndTime ?? reservationEntity.ReservationEndTime;
+
+            if(!await _unitOfWork.reservationRepository.IsReservationAvailable(reservationEntity)) {
+                throw new OfficeAlreadyReservedException(reservationEntity.OfficeId);
+            }
+            if (_unitOfWork.officeRepository.Get(u => u.Id == reservationEntity.OfficeId) == null)
+            {
+                
+            }
+            await _unitOfWork.reservationRepository.Update(reservationEntity!);
+            await _unitOfWork.Save();
+        }
     }
 }
