@@ -97,8 +97,6 @@ dotnet test
 
 While the core functionality is solid, I plan to expand the system with the following features:
 
-- [ ] **Tests :** Add more tests in 'OfficeBooker.Tests'.
-- [ ] **Add more advanced CRUD:** Implement update reservations method.
 - [ ] **Email Notifications:** Integrate SendGrid to notify workers about successful bookings or upcoming reservation changes.
 - [ ] **Admin Dashboard:** Add a visual dashboard with statistics on office occupancy and peak booking hours.
 - [ ] **Advanced Filtering:** Enable users to filter desks by equipment (e.g., "dual monitor", "standing desk").
