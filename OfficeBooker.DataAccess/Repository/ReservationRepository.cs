@@ -1,4 +1,5 @@
-﻿using OfficeBooker.DataAccess.Repository.I_Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using OfficeBooker.DataAccess.Repository.I_Repository;
 using OfficeBooker.Models;
 using OfficeBooker.Models.DTOs;
 using System.Linq.Expressions;
@@ -16,7 +17,7 @@ namespace OfficeBooker.DataAccess.Repository
 
         public async Task<bool> IsReservationAvailable(Reservation reservation)
         {
-            bool hasCollision = _db.Reservations.Any(existing =>
+            bool hasCollision = await _db.Reservations.AnyAsync(existing =>
                 existing.OfficeId == reservation.OfficeId &&
                 reservation.ReservationStartTime < existing.ReservationEndTime &&
                 existing.ReservationStartTime < reservation.ReservationEndTime);
